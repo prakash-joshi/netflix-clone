@@ -1,6 +1,11 @@
+import { useState } from "react";
 import Header from "./Header";
 
 const Login = () => {
+  const [isSignInForm, setIsSignInForm] = useState(true);
+  const toggleSignInForm = () => {
+    setIsSignInForm(!isSignInForm);
+  };
   return (
     <div>
       <Header />
@@ -12,8 +17,17 @@ const Login = () => {
         }}
       >
         <form className="absolute flex flex-col mt-[10%] ml-[35%] py-8 w-[30%] h-auto text-white bg-black bg-opacity-85">
-          <h1 className="pt-4 my-4 mx-20 text-3xl font-bold">Sign In</h1>
+          <h1 className="pt-4 my-4 mx-20 text-3xl font-bold">
+            {isSignInForm ? "Sign In" : "Sign Up"}
+          </h1>
           <body className="flex flex-col px-4 mx-4 ">
+            {!isSignInForm && (
+              <input
+                className="p-4 my-4 mx-12 bg-black border border-slate-600"
+                type="text"
+                placeholder="Name"
+              />
+            )}
             <input
               className="p-4 my-4 mx-12 bg-black border border-slate-600"
               type="text"
@@ -24,17 +38,14 @@ const Login = () => {
               type="password"
               placeholder="Password"
             />
-            <button className="bg-red-700 p-2 mx-12 mt-4 mb-10 rounded-lg">
-              Sign In
+            <button className="bg-red-600 p-2 mx-12 mt-4 mb-10 rounded-lg">
+              {isSignInForm ? "Sign In" : "Sign Up"}
             </button>
           </body>
-          <span className="mx-20">
-            New to Netflix?{" "}
-            <span>
-              <a href="/" className="hover:underline">
-                Sign up now.
-              </a>
-            </span>
+          <span className="mx-20 hover:underline" onClick={toggleSignInForm}>
+            {isSignInForm
+              ? "New to Netflix? Sign up now."
+              : "Already have an account Sign In."}
           </span>
         </form>
       </div>
