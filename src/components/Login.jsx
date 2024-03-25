@@ -9,12 +9,17 @@ import { LOGIN_BACKGROUND_IMAGE_URL } from "../utils/constants";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [isSignInForm, setIsSignInForm] = useState(true),
     [userNamevalidationRes, setUserNamevalidationRes] = useState(""),
     [userEmailValidationRes, setUserEmailValidationRes] = useState(""),
@@ -55,8 +60,6 @@ const Login = () => {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log("errorCode : ", errorCode);
-          console.log("errorMessage : ", errorMessage);
           setLoginErrorMsg(errorCode + " - " + errorMessage);
         });
     } else {
@@ -76,14 +79,25 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
+          updateProfile(user, {
+            displayName: userName.current.value,
+            photoURL: "https://robohash.org/example",
+          })
+            .then(() => {
+              const { displayName, email, phoneNumber, photoURL, uid } =
+                auth.currentUser;
+              dispatch(
+                addUser({ displayName, email, phoneNumber, photoURL, uid })
+              );
+            })
+            .catch((error) => {
+              setLoginErrorMsg(error.message);
+            });
           navigate("/browse");
-          console.log("user : ", user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log("errorCode : ", errorCode);
-          console.log("errorMessage : ", errorMessage);
           setLoginErrorMsg(errorCode + " - " + errorMessage);
         });
     }
