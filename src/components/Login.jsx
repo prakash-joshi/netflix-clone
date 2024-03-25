@@ -12,12 +12,10 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [isSignInForm, setIsSignInForm] = useState(true),
@@ -55,7 +53,6 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log("user : ", user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -93,7 +90,6 @@ const Login = () => {
             .catch((error) => {
               setLoginErrorMsg(error.message);
             });
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
