@@ -6,12 +6,18 @@ import {
   validateUserPassword,
 } from "../utils/validation";
 import { LOGIN_BACKGROUND_IMAGE_URL } from "../utils/constants";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true),
     [userNamevalidationRes, setUserNamevalidationRes] = useState(""),
     [userEmailValidationRes, setUserEmailValidationRes] = useState(""),
-    [userPasswordValidationRes, setUserPasswordValidationRes] = useState("");
+    [userPasswordValidationRes, setUserPasswordValidationRes] = useState(""),
+    [loginErrorMsg, setLoginErrorMsg] = useState("");
 
   const userName = useRef(null),
     userEmail = useRef(null),
@@ -22,6 +28,7 @@ const Login = () => {
     setUserNamevalidationRes("");
     setUserEmailValidationRes("");
     setUserPasswordValidationRes("");
+    setLoginErrorMsg("");
   };
 
   const handleUserDataValidation = () => {
@@ -30,6 +37,25 @@ const Login = () => {
       const pwdValidationRes = validateUserPassword(userPassword.current.value);
       setUserEmailValidationRes(emailValidationRes);
       setUserPasswordValidationRes(pwdValidationRes);
+
+      if (emailValidationRes || pwdValidationRes) return;
+
+      signInWithEmailAndPassword(
+        auth,
+        userEmail.current.value,
+        userPassword.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("user : ", user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("errorCode : ", errorCode);
+          console.log("errorMessage : ", errorMessage);
+          setLoginErrorMsg(errorCode + " - " + errorMessage);
+        });
     } else {
       const nameValidationRes = validateUserName(userName.current.value);
       const emailValidationRes = validateUserEmail(userEmail.current.value);
@@ -37,6 +63,25 @@ const Login = () => {
       setUserNamevalidationRes(nameValidationRes);
       setUserEmailValidationRes(emailValidationRes);
       setUserPasswordValidationRes(pwdValidationRes);
+
+      if (nameValidationRes || emailValidationRes || pwdValidationRes) return;
+
+      createUserWithEmailAndPassword(
+        auth,
+        userEmail.current.value,
+        userPassword.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("user : ", user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("errorCode : ", errorCode);
+          console.log("errorMessage : ", errorMessage);
+          setLoginErrorMsg(errorCode + " - " + errorMessage);
+        });
     }
   };
 
@@ -87,6 +132,7 @@ const Login = () => {
             <p className=" my-1 mx-12 text-red-700">
               {userPasswordValidationRes}
             </p>
+            <p className=" my-1 mx-12 text-red-700">{loginErrorMsg}</p>
             <button
               className="bg-red-600 p-2 mx-12 mt-4 mb-10 rounded-lg"
               onClick={handleUserDataValidation}
