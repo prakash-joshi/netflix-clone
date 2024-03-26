@@ -5,7 +5,7 @@ import {
   validateUserEmail,
   validateUserPassword,
 } from "../utils/validation";
-import { LOGIN_BACKGROUND_IMAGE_URL } from "../utils/constants";
+import { LOGIN_BACKGROUND_IMAGE_URL, USER_AVATAR } from "../utils/constants";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -78,7 +78,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: userName.current.value,
-            photoURL: "https://robohash.org/example",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               const { displayName, email, phoneNumber, photoURL, uid } =
