@@ -3,7 +3,8 @@ export const LOGIN_BACKGROUND_IMAGE_URL =
 
 export const USER_AVATAR = "https://robohash.org/test";
 
-const TMDB_API_READ_ACCESS_TOKEN = import.meta.env.TMDB_API_READ_ACCESS_TOKEN;
+const TMDB_API_READ_ACCESS_TOKEN = import.meta.env
+  .VITE_TMDB_API_READ_ACCESS_TOKEN;
 
 export const API_OPTIONS = {
   method: "GET",
