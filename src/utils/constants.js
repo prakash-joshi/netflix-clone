@@ -16,6 +16,16 @@ export const API_OPTIONS = {
 
 export const API_MOVIE_NOW_PLAYING =
   "https://api.themoviedb.org/3/movie/now_playing?page=1";
+
+export const API_MOVIE_POPULAR =
+  "https://api.themoviedb.org/3/movie/popular?page=1";
+
+export const API_MOVIE_TOP_RATED =
+  "https://api.themoviedb.org/3/movie/top_rated?page=1";
+
+export const API_MOVIE_UPCOMING =
+  "https://api.themoviedb.org/3/movie/upcoming?page=1";
+
 export const API_GET_MOVIE_VIDEOS =
   "https://api.themoviedb.org/3/movie/[MOVIE_ID]/videos?language=en-US";
 
