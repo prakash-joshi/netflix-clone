@@ -18,3 +18,5 @@ export const API_MOVIE_NOW_PLAYING =
   "https://api.themoviedb.org/3/movie/now_playing?page=1";
 export const API_GET_MOVIE_VIDEOS =
   "https://api.themoviedb.org/3/movie/[MOVIE_ID]/videos?language=en-US";
+
+export const CDN_MOVIE_POSTER_URL = "https://image.tmdb.org/t/p/w500";
