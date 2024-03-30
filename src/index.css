@@ -6,6 +6,10 @@ body {
   @apply bg-zinc-900 h-full overflow-x-hidden;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* #___next {
   @apply h-full;
 }

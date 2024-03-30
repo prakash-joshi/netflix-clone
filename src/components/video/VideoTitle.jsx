@@ -1,7 +1,7 @@
 const VideoTitle = (props) => {
   const { title, overview } = props;
   return (
-    <div className="absolute text-white flex flex-col mt-[27%] mx-10 w-screen aspect-video ">
+    <div className="absolute text-white flex flex-col  pt-[27%] px-12 w-screen aspect-video">
       <span className="font-bold text-6xl text-white">{title}</span>
       <span className="w-3/5 py-5">{overview}</span>
       <div className="flex gap-3">
